@@ -23,15 +23,14 @@ buildGoModule rec {
 
   CGO_CFLAGS="-O -D__BLST_PORTABLE__";
   CGO_ENABLED = 1;
-#  postInstall = ''
-#    mv $out/bin/rocketpool-cli $out/bin/rocketpool
-#    mv $out/bin/rocketpoold $out/bin/rocketpoold
-#  '';
+  postInstall = ''
+    mv $out/bin/rocketpool $out/bin/rocketpoold
+  '';
 
   meta = {
-    description = "Rocket Pool CLI and daemon";
+    description = "Rocket Pool Daemon";
     homepage = "https://github.com/rocket-pool/smartnode";
-    mainProgram = "rocketpool";
+    mainProgram = "rocketpoold";
     platforms = ["aarch64-linux" "x86_64-linux"];
   };
 }

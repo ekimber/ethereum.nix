@@ -57,7 +57,7 @@
       nimbus = callPackageUnstable ./nimbus {};
       prysm = callPackage ./prysm {inherit bls blst;};
       reth = callPackageUnstable ./reth {};
-      rocketpool = callPackage ./rocketpool {};
+      rocketpool = callPackage ./rocketpool {inherit bls blst;};
       rotki-bin = callPackage ./rotki-bin {};
       sedge = callPackage ./sedge {inherit bls mcl;};
       slither = callPackage ./slither {};
