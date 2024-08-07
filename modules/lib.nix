@@ -92,7 +92,7 @@ lib: let
     RestrictRealtime = mkDefault true;
     RestrictNamespaces = mkDefault true;
     LockPersonality = mkDefault true;
-    MemoryDenyWriteExecute = mkDefault true;
+    #MemoryDenyWriteExecute = mkDefault true;
     SystemCallFilter = lib.mkDefault ["@system-service" "~@privileged"];
   };
 in {
