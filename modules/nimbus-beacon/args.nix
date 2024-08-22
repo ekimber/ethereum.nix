@@ -93,6 +93,12 @@ with lib; {
     description = "The graffiti value that will appear in proposed blocks. You can use a 0x-prefixed hex encoded string to specify raw bytes.";
   };
 
+  keymanager = mkOption {
+    type = types.bool;
+    default = false;
+    description = "Enable keymanager API";
+  };
+  
   metrics = {
     enable = mkOption {
       type = types.bool;
