@@ -98,6 +98,12 @@ with lib; {
     default = false;
     description = "Enable keymanager API";
   };
+
+  keymanager-token-file = mkOption {
+    type = types.str;
+    default = "api-token.txt";
+    description = "Keymanager API token file";
+  };
   
   metrics = {
     enable = mkOption {
