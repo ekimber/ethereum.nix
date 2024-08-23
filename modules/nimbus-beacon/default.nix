@@ -168,10 +168,10 @@ in {
               after = ["network.target"];
               wantedBy = ["multi-user.target"];
               description = "Nimbus Beacon Node (${beaconName})";
-              preStart = ''
-cat /proc/sys/kernel/random/uuid | tee ${data-dir}/${cfg.args.keymanager.token-file}
-${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}
-                '';
+#               preStart = ''
+# echo "cat /proc/sys/kernel/random/uuid | tee ${data-dir}/${cfg.args.keymanager.token-file}"
+# ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}
+                # '';
               # (concatStringsSep "\n" (optionals cfg.args.keymanager.enable
               #   [ ''echo "$(dd if=/dev/urandom bs=32 count=1)" | base64 > ${data-dir}/${cfg.args.keymanager.token-file} '' ])
               # ++
@@ -187,7 +187,8 @@ ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}
                     then cfg.args.user
                     else user;
                   StateDirectory = user;
-                  #ExecStartPre =
+                  ExecStartPre = "cat /proc/sys/kernel/random/uuid | tee ${data-dir}/${cfg.args.keymanager.token-file}";
+                  ExecStartPre = "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}";
                   ExecStart = "${cfg.package}/bin/nimbus_beacon_node ${scriptArgs}";
                 }
                 (mkIf (cfg.args.jwt-secret != null) {
