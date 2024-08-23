@@ -187,7 +187,7 @@ in {
                     then cfg.args.user
                     else user;
                   StateDirectory = user;
-                  ExecStartPre = lib.mkBefore [ "cat /proc/sys/kernel/random/uuid | tee ${data-dir}/${cfg.args.keymanager.token-file}"
+                  ExecStartPre = lib.mkBefore [ "cat /proc/sys/kernel/random/uuid > ${data-dir}/${cfg.args.keymanager.token-file}"
                                                 "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}" ];
                   ExecStart = "${cfg.package}/bin/nimbus_beacon_node ${scriptArgs}";
                 }
