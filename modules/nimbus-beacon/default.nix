@@ -100,7 +100,7 @@ in {
               if cfg.args.data-dir != null
               then cfg.args.data-dir
               else "%S/${serviceName}";
-            data-dir-option = "--data-dir=${data-dir}";
+            data-dir-arg = "--data-dir=${data-dir}";
             scriptArgs = let
               # filter out certain args which need to be treated differently
               specialArgs = [
@@ -146,7 +146,7 @@ in {
                 ]);
             in ''
               ${jwt-secret} \
-              ${data-dir-opt} \
+              ${data-dir-arg} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
