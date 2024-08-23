@@ -181,7 +181,7 @@ in {
                   StateDirectory = user;
                   ExecStartPre =
                     if cfg.args.keymanager.enable
-                    then [ (pkgs.writer.bash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ]
+                    then [ (pkgs.writers.bash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ]
                     else []
                          ++
                          "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}";
