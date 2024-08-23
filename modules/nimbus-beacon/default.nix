@@ -146,7 +146,7 @@ in {
                 ]);
             in ''
               ${jwt-secret} \
-              ${data-dir} \
+              ${data-dir-opt} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
