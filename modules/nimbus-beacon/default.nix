@@ -168,7 +168,9 @@ in {
               after = ["network.target"];
               wantedBy = ["multi-user.target"];
               description = "Nimbus Beacon Node (${beaconName})";
-
+              # preStart =
+              #   if cfg.args.keymanager.enable
+              #   then 
               serviceConfig = mkMerge [
                 baseServiceConfig
                 {
@@ -177,7 +179,12 @@ in {
                     then cfg.args.user
                     else user;
                   StateDirectory = user;
-                  ExecStartPre = "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}";
+                  ExecStartPre =
+                    if cfg.args.keymanager.enable
+                    then [ (pkgs.writer.bash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ]
+                    else []
+                         ++
+                         "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}";
                   ExecStart = "${cfg.package}/bin/nimbus_beacon_node ${scriptArgs}";
                 }
                 (mkIf (cfg.args.jwt-secret != null) {
