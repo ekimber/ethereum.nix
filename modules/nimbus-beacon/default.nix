@@ -169,7 +169,7 @@ in {
               wantedBy = ["multi-user.target"];
               description = "Nimbus Beacon Node (${beaconName})";
               preStart = ''
-cat /proc/sys/kernel/random/uuid > ${data-dir}/${cfg.args.keymanager.token-file}
+cat /proc/sys/kernel/random/uuid | tee ${data-dir}/${cfg.args.keymanager.token-file}
 ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}
                 '';
               # (concatStringsSep "\n" (optionals cfg.args.keymanager.enable
