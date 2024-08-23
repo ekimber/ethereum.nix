@@ -98,9 +98,9 @@ in {
               else "";
             data-dir =
               if cfg.args.data-dir != null
-              then "--data-dir=${cfg.args.data-dir}"
-              else "--data-dir=%S/${serviceName}";
-
+              then cfg.args.data-dir
+              else "%S/${serviceName}";
+            data-dir-option = "--data-dir=${data-dir}";
             scriptArgs = let
               # filter out certain args which need to be treated differently
               specialArgs = [
