@@ -160,7 +160,7 @@ in {
               filteredArgs = builtins.filter isCheckpointArg args;
             in ''
               --backfill=false \
-              ${data-dir} \
+              ${data-dir-arg} \
               ${concatStringsSep " \\\n" filteredArgs}
             '';
           in
