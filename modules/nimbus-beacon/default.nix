@@ -180,11 +180,10 @@ in {
                     else user;
                   StateDirectory = user;
                   ExecStartPre =
-                    if cfg.args.keymanager.enable
-                    then [ (pkgs.writers.writeBash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ]
-                    else []
-                         ++
-                         "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}";
+                    (optionals cfg.args.keymanager.enable
+                      [ (pkgs.writers.writeBash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ])
+                    ++
+                    [ "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}" ];
                   ExecStart = "${cfg.package}/bin/nimbus_beacon_node ${scriptArgs}";
                 }
                 (mkIf (cfg.args.jwt-secret != null) {
