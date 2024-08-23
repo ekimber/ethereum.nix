@@ -168,6 +168,11 @@ in {
               after = ["network.target"];
               wantedBy = ["multi-user.target"];
               description = "Nimbus Beacon Node (${beaconName})";
+              preStart =
+                (optionals cfg.args.keymanager.enable
+                      [ (pkgs.writers.writeBash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ])
+                    ++
+                    [ "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}" ];
               # preStart =
               #   if cfg.args.keymanager.enable
               #   then 
@@ -179,11 +184,7 @@ in {
                     then cfg.args.user
                     else user;
                   StateDirectory = user;
-                  ExecStartPre =
-                    (optionals cfg.args.keymanager.enable
-                      [ (pkgs.writers.writeBash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ])
-                    ++
-                    [ "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}" ];
+                  #ExecStartPre =
                   ExecStart = "${cfg.package}/bin/nimbus_beacon_node ${scriptArgs}";
                 }
                 (mkIf (cfg.args.jwt-secret != null) {
