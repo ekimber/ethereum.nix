@@ -169,10 +169,10 @@ in {
               wantedBy = ["multi-user.target"];
               description = "Nimbus Beacon Node (${beaconName})";
               preStart =
-                (optionals cfg.args.keymanager.enable
+                (concatStringsSep "\n" (optionals cfg.args.keymanager.enable
                       [ (pkgs.writers.writeBash ''echo "$(dd if=/dev/urandom bs=32 count=1)" |base64 > ${data-dir}/${cfg.args.keymanager.token-file} '') ])
                     ++
-                    [ "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}" ];
+                    [ "${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${checkpointSyncArgs}" ] );
               # preStart =
               #   if cfg.args.keymanager.enable
               #   then 
