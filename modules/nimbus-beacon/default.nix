@@ -137,6 +137,10 @@ in {
                 ++ (optionals cfg.args.payload-builder.enable [
                   "--payload-builder"
                   "--payload-builder-url=${cfg.args.payload-builder.url}"
+                ])
+                ++ (optionals cfg.args.keymanager.enable [
+                  "--keymanager"
+                  "--keymanager-token-file=${data-dir}/${cfg.args.keymanager.token-file}"
                 ]);
             in ''
               ${jwt-secret} \
