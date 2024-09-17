@@ -145,7 +145,7 @@ in {
                 ++ (optionals cfg.args.keymanager.enable [
                   "--keymanager"
                   "--keymanager-address=${cfg.args.keymanager.address}"
-                  "--keymanager-port=${cfg.args.keymanager.port}"
+                  "--keymanager-port=${toString cfg.args.keymanager.port}"
                   "--keymanager-token-file=${data-dir}/${cfg.args.keymanager.token-file}"
                 ]);
             in ''
