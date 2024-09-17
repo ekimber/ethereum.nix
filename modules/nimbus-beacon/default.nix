@@ -118,6 +118,8 @@ in {
                 "--payload-builder-url"
                 "--keymanager-enable"
                 "--keymanager-token-file"
+                "--keymanager-address"
+                "--keymanager-port"
                 "--trusted-node-url" # only needed for checkpoint sync
               ];
               isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
@@ -142,6 +144,8 @@ in {
                 ])
                 ++ (optionals cfg.args.keymanager.enable [
                   "--keymanager"
+                  "--keymanager-address=${cfg.args.keymanager.address}"
+                  "--keymanager-port=${cfg.args.keymanager.port}"
                   "--keymanager-token-file=${data-dir}/${cfg.args.keymanager.token-file}"
                 ]);
             in ''

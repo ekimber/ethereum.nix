@@ -99,6 +99,16 @@ with lib; {
       default = false;
       description = "Enable keymanager API";
     };
+    address = mkOption {
+      type = types.str;
+      default = "127.0.0.1";
+      description = "Host used for keymanager API.";      
+    };
+    port = mkOption {
+      type = types.port;
+      default = 5053;
+      description = "Keymanager API PORT";
+    };
     token-file = mkOption {
       type = types.str;
       default = "api-token.txt";
