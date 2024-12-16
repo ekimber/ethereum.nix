@@ -40,15 +40,15 @@ in {
               # filter out certain args which need to be treated differently
               specialArgs = [
                 "--network"
-                "-goerli"
-                "-holesky"
-                "-mainnet"
-                "-relay-monitor"
-                "-relay-monitors"
-                "-relay"
-                "-relays"
-                "-sepolia"
-                "-zhejiang"
+                "--goerli"
+                "--holesky"
+                "--mainnet"
+                "--relay-monitor"
+                "--relay-monitors"
+                "--relay"
+                "--relays"
+                "--sepolia"
+                "--zhejiang"
               ];
               isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
               filteredArgs = builtins.filter isNormalArg args;
@@ -58,10 +58,10 @@ in {
                 then "-${cfg.args.network}"
                 else "";
 
-              relays = "-relays " + (concatStringsSep "," cfg.args.relays);
+              relays = "--relays " + (concatStringsSep "," cfg.args.relays);
               relayMonitors =
                 if cfg.args.relay-monitors != null
-                then "-relay-monitors" + (concatStringsSep "," cfg.args.relay-monitors)
+                then "--relay-monitors" + (concatStringsSep "," cfg.args.relay-monitors)
                 else "";
             in ''
               ${network} \
