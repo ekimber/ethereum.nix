@@ -68,7 +68,6 @@ in {
               ${concatStringsSep " \\\n" filteredArgs} \
               ${relays} \
               ${relayMonitors} \
-              ${lib.escapeShellArgs cfg.extraArgs}
             '';
           in
             nameValuePair serviceName (mkIf cfg.enable {
