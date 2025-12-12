@@ -111,6 +111,9 @@ in {
                   # Erigon needs this system call for some reason
                   SystemCallFilter = ["@system-service" "~@privileged" "mincore"];
                 }
+                (mkIf (cfg.args.jwtsecret != null) {
+                  LoadCredential = ["jwt-secret:${cfg.args.authrpc.jwtsecret}"];
+                })
               ];
             })
       )
