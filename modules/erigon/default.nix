@@ -86,6 +86,10 @@ in {
                 if cfg.args.datadir != null
                 then "--datadir ${cfg.args.datadir}"
                 else "--datadir %S/${serviceName}";
+              jwt-secret =
+                if cfg.args.authrpc.jwtsecret != null
+                then "--authrpc.jwt-secret=%d/jwt-secret"
+                else "";
             in ''
               ${datadir} \
               ${concatStringsSep " \\\n" args} \
@@ -111,7 +115,7 @@ in {
                   # Erigon needs this system call for some reason
                   SystemCallFilter = ["@system-service" "~@privileged" "mincore"];
                 }
-                (mkIf (cfg.args.jwtsecret != null) {
+                (mkIf (cfg.args.authrpc.jwtsecret != null) {
                   LoadCredential = ["jwt-secret:${cfg.args.authrpc.jwtsecret}"];
                 })
               ];
