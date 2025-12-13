@@ -92,13 +92,13 @@ in {
                 if cfg.args.datadir != null
                 then "--datadir ${cfg.args.datadir}"
                 else "--datadir %S/${serviceName}";
-              jwt-secret =
+              jwtsecret =
                 if cfg.args.authrpc.jwtsecret != null
-                then "--authrpc.jwt-secret=%d/jwt-secret"
+                then "--authrpc.jwtsecret=%d/jwtsecret"
                 else "";
             in ''
               ${datadir} \
-              ${jwt-secret} \
+              ${jwtsecret} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
@@ -123,7 +123,7 @@ in {
                   SystemCallFilter = ["@system-service" "~@privileged" "mincore"];
                 }
                 (mkIf (cfg.args.authrpc.jwtsecret != null) {
-                  LoadCredential = ["jwt-secret:${cfg.args.authrpc.jwtsecret}"];
+                  LoadCredential = ["jwtsecret:${cfg.args.authrpc.jwtsecret}"];
                 })
               ];
             })
