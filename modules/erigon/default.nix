@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib.lists) optionals;
+  inherit (lib.lists) optionals findFirst;
   inherit
     (lib)
     concatStringsSep
