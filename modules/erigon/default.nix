@@ -6,6 +6,7 @@
   ...
 }: let
   inherit (lib.lists) optionals findFirst;
+  inherit (lib.strings) hasPrefix;
   inherit
     (lib)
     concatStringsSep
