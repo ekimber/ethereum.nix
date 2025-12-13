@@ -82,6 +82,11 @@ in {
                   inherit pathReducer opts;
                   inherit (cfg) args;
                 };
+              
+              specialArgs = [ "--authrpc.jwtsecret"];
+              isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
+              filteredArgs = builtins.filter isNormalArg args;
+              
               datadir =
                 if cfg.args.datadir != null
                 then "--datadir ${cfg.args.datadir}"
@@ -92,7 +97,8 @@ in {
                 else "";
             in ''
               ${datadir} \
-              ${concatStringsSep " \\\n" args} \
+              ${jwt-secret} \
+              ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
           in
